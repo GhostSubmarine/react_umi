@@ -1,11 +1,14 @@
-import React from 'react';
-import './App.css';
-import Login from './screens/login/index'
+import React from 'react'
+import './App.css'
+import { AuthenticatedApp } from './authenticated-app'
+import { UnathenticatedApp } from './unauthenticated-app'
+import { useAuth } from './context/auth-context'
 
 const App = () => {
+    const { user } = useAuth()
     return (
         <div className="App">
-          <Login />
+            { user ? <AuthenticatedApp /> : <UnathenticatedApp /> }
         </div>
     )
 }

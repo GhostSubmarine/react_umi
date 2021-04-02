@@ -6,12 +6,11 @@ interface User {
     organization: string;
     token: string;
 }
-const AuthContext = React.createContext<
-| {
-    user: User | null;
-    register: (form: AuthForm) => Promise<void>;
-    login: (form: AuthForm) => Promise<void>;
-    logout: () => Promise<void>;
+const AuthContext = React.createContext<{
+    user: User | null,
+    register: (form: AuthForm) => Promise<void>
+    login: (form: AuthForm) => Promise<void>
+    logout: () => Promise<void>
 } | undefined>(undefined)
 
 interface AuthForm {
@@ -22,11 +21,11 @@ interface AuthForm {
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-    const [user, setUser] = useState<User | null>(null)
-    const logout = () => auth.logout().then(() => setUser(null))
-    const login = (form: AuthForm) => auth.login(form).then(setUser)
-    const register = (form: AuthForm) => auth.register(form).then(setUser)
-    return <AuthContext.Provider children={children} value ={{user, login, register, logout}} />
+    const [user, setuser] = useState<User | null>(null)
+    const login = (form: AuthForm) => auth.login(form).then(setuser)
+    const register = (form: AuthForm) => auth.register(form).then(setuser)
+    const logout = () => auth.logout().then(() => setuser(null))
+    return (<AuthContext.Provider children={ children } value ={{user, login, register, logout}} />)
 }
 
 export const useAuth = () => {
